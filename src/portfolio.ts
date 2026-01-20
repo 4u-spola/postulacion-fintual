@@ -7,4 +7,8 @@ export class Portfolio {
     constructor() {
         this.stockAllocated = [];
     }
+
+    public getStockAllocated(): StockAllocated[] {
+        return [...this.stockAllocated];
+    }
 }
