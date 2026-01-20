@@ -101,6 +101,10 @@ export class Portfolio {
     }
 
     public rebalance(): { toSell: { ticker: string, quantity: number }[], toBuy: { ticker: string, quantity: number }[] } {
+        if (Object.keys(this.ownedStocks).length === 0) {
+            throw new Error('Portfolio is empty');
+        }
+
         const marketValue = this.calculateMarketValue();
         const currentAllocation = this.currentAllocation();
         const stockAllocated = this.getStockAllocated().reduce((acc, stockAllocated) => {

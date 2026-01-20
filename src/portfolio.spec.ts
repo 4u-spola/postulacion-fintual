@@ -319,21 +319,9 @@ describe('Portfolio', () => {
             expect(actions.toSell[0]).toEqual({ ticker: 'META', quantity: 50 });
         });
 
-        // it('should rebalance the portfolio', () => {
-        //     const portfolio = new Portfolio();
-        //     const stock1 = new Stock('AAPL', 'Apple Inc.', 100);
-        //     portfolio.setStockAllocated([new StockAllocated(stock1, 100)]);
-            
-            
-        //     const actions = portfolio.rebalance();
-
-        //     expect(actions).toHaveProperty('toSell');
-        //     expect(actions).toHaveProperty('toBuy');
-
-        //     expect(actions.toSell).toHaveLength(0);
-        //     expect(actions.toBuy).toHaveLength(1);
-
-        //     expect(actions.toBuy[0]).toEqual({ ticker: 'AAPL', quantity: 1 });
-        // });
+        it('should throw error trying to rebalance an empty portfolio', () => {
+            const portfolio = new Portfolio();
+            expect(() => portfolio.rebalance()).toThrow('Portfolio is empty');
+        });
     });
 });
