@@ -8,4 +8,12 @@ export class StockAllocated {
         this.stock = stock;
         this.quantity = quantity;
     }
+
+    public getStock(): Stock {
+        return this.stock;
+    }
+
+    public getQuantity(): number {
+        return this.quantity;
+    }
 }

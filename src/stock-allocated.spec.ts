@@ -11,5 +11,9 @@ describe('StockAllocated', () => {
     it('should create a stock allocated instance', () => {
         const stockAllocated = new StockAllocated(stock, 100);
         expect(stockAllocated).toBeDefined();
+        expect(stockAllocated.getStock()).toEqual(stock);
+        expect(stockAllocated.getQuantity()).toEqual(100);
     });
+
+    
 });
