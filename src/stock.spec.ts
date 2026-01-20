@@ -38,4 +38,25 @@ describe('Stock', () => {
         });
     });
 
+
+
+    describe('getter and setter', () => {
+        let stock: Stock;
+
+        beforeEach(() => {
+            stock = new Stock('AAPL', 'Apple Inc.', 150);
+        });
+
+        describe('current price', () => {
+            it('should get the current price', () => {
+                expect(stock.getCurrentPrice()).toBe(150);
+            });
+
+            it('should set the current price', () => {
+                stock.setCurrentPrice(160);
+                expect(stock.getCurrentPrice()).toBe(160);
+                expect(stock.getHistory()).toHaveLength(2);
+            });
+        });
+    });
 });

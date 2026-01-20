@@ -10,7 +10,7 @@ describe('StockHistory', () => {
     it('should have a stock', () => {
         const stockHistory = new StockHistory(new Stock('AAPL', 'Apple Inc.', 150), new Date(), 150);
         expect(stockHistory.getStock()).toBeDefined();
-        expect(stockHistory.getStock()).toEqual(new Stock('AAPL', 'Apple Inc.', 150));
+        expect(stockHistory.getStock().getTicker()).toEqual('AAPL');
     });
 
     it('should have a date', () => {

@@ -28,11 +28,23 @@ export class Stock {
             throw new Error('Price must be greater than 0');
         }
     }
-
-    
+    public getTicker(): string {
+        return this.ticker;
+    }
 
     public getHistory(): StockHistory[] {
         return this.history;
+    }
+
+    public getCurrentPrice(): number {
+        return this.price;
+    }
+
+    public setCurrentPrice(price: number): void {
+        this.validateParams(this.ticker, this.name, price);
+
+        this.price = price;
+        this.history.push(new StockHistory(this, new Date(), price));
     }
 
 
