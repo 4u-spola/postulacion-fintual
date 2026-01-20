@@ -39,6 +39,13 @@ export class Portfolio {
     }
 
     public registerBuyTransaction(stock: Stock, quantity: number): void {
+        if (!stock) {
+            throw new Error('Stock is required');
+        }
+        if (!quantity || typeof quantity !== 'number' || isNaN(quantity) || quantity <= 0) {
+            throw new Error('Quantity must be a positive number');
+        }
+
         this.ownedStocks[stock.getTicker()] = { quantity, stock };
     }
 }

@@ -95,18 +95,18 @@ describe('Portfolio', () => {
 
         });
 
-        // it('should throw an error if the quantity is not a number', () => {
-        //     const portfolio = new Portfolio();
-        //     const stock = new Stock('AAPL', 'Apple Inc.', 150);
-        //     expect(() => portfolio.registerBuyTransaction(stock, '100' as unknown as number)).toThrow('Quantity must be a number');
-        //     expect(() => portfolio.registerBuyTransaction(stock, undefined as unknown as number)).toThrow('Quantity must be a number');
-        //     expect(() => portfolio.registerBuyTransaction(stock, null as unknown as number)).toThrow('Quantity must be a number');
-        // });
+        it('should throw an error if the quantity is not a number', () => {
+            const portfolio = new Portfolio();
+            const stock = new Stock('AAPL', 'Apple Inc.', 150);
+            expect(() => portfolio.registerBuyTransaction(stock, '100' as unknown as number)).toThrow('Quantity must be a positive number');
+            expect(() => portfolio.registerBuyTransaction(stock, undefined as unknown as number)).toThrow('Quantity must be a positive number');
+            expect(() => portfolio.registerBuyTransaction(stock, null as unknown as number)).toThrow('Quantity must be a positive number');
+        });
 
-        // it('should throw an error if the stock is not provided', () => {
-        //     const portfolio = new Portfolio();
-        //     expect(() => portfolio.registerBuyTransaction(null as unknown as Stock, 100)).toThrow('Stock is required');
-        //     expect(() => portfolio.registerBuyTransaction(undefined as unknown as Stock, 100)).toThrow('Stock is required');
-        // });
+        it('should throw an error if the stock is not provided', () => {
+            const portfolio = new Portfolio();
+            expect(() => portfolio.registerBuyTransaction(null as unknown as Stock, 100)).toThrow('Stock is required');
+            expect(() => portfolio.registerBuyTransaction(undefined as unknown as Stock, 100)).toThrow('Stock is required');
+        });
     });
 });
