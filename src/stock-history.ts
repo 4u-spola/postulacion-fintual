@@ -12,4 +12,20 @@ export class StockHistory {
         this.price = price;
         this.old_price = old_price;
     }
+
+    public getStock(): Stock {
+        return this.stock;
+    }
+
+    public getDate(): Date {
+        return this.date;
+    }
+
+    public getPrice(): number {
+        return this.price;
+    }
+
+    public getOldPrice(): number | undefined {
+        return this.old_price;
+    }
 }
