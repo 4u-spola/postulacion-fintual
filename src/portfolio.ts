@@ -52,4 +52,29 @@ export class Portfolio {
             this.ownedStocks[stock.getTicker()] = { quantity, stock };
         }
     }
+
+    public registerSellTransaction(stock: Stock, quantity: number): void {
+        if (!stock) {
+            throw new Error('Stock is required');
+        }
+        if (!quantity || typeof quantity !== 'number' || isNaN(quantity) || quantity <= 0) {
+            throw new Error('Quantity must be a positive number');
+        }
+
+        const ownedStock = this.ownedStocks[stock.getTicker()];
+        if (!ownedStock) {
+            throw new Error('Stock is not owned');
+        }
+
+        if (ownedStock.quantity < quantity) {
+            throw new Error('Quantity must be less than the owned quantity');
+        }
+
+
+        ownedStock.quantity -= quantity;
+
+        if (ownedStock.quantity === 0) {
+            delete this.ownedStocks[stock.getTicker()];
+        }
+    }
 }

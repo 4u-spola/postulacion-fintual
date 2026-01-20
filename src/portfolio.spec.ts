@@ -135,4 +135,67 @@ describe('Portfolio', () => {
             expect(portfolio.getOwnedStocks()['META']).toHaveProperty('quantity', 900);
         });
     });
+
+    describe('registerSellTransaction', () => {
+
+        it('should throw an error if the quantity is not a number', () => {
+            const portfolio = new Portfolio();
+            const stock = new Stock('AAPL', 'Apple Inc.', 150);
+            expect(() => portfolio.registerSellTransaction(stock, '100' as unknown as number)).toThrow('Quantity must be a positive number');
+            expect(() => portfolio.registerSellTransaction(stock, undefined as unknown as number)).toThrow('Quantity must be a positive number');
+            expect(() => portfolio.registerSellTransaction(stock, null as unknown as number)).toThrow('Quantity must be a positive number');
+            expect(() => portfolio.registerSellTransaction(stock, -1)).toThrow('Quantity must be a positive number');
+            expect(() => portfolio.registerSellTransaction(stock, NaN)).toThrow('Quantity must be a positive number');
+            expect(() => portfolio.registerSellTransaction(stock, -Infinity)).toThrow('Quantity must be a positive number');
+        });
+
+        it('should throw an error if the stock is not provided', () => {
+            const portfolio = new Portfolio();
+            expect(() => portfolio.registerSellTransaction(null as unknown as Stock, 100)).toThrow('Stock is required');
+            expect(() => portfolio.registerSellTransaction(undefined as unknown as Stock, 100)).toThrow('Stock is required');
+        });
+
+        it('should throw an error if the quantity is greater than the owned quantity', () => {
+            const portfolio = new Portfolio();
+            const stock = new Stock('AAPL', 'Apple Inc.', 150);
+            portfolio.registerBuyTransaction(stock, 100);
+            expect(() => portfolio.registerSellTransaction(stock, 150)).toThrow('Quantity must be less than the owned quantity');
+        });
+
+        it('should subtract the quantity of the owned stock', () => {
+            const portfolio = new Portfolio();
+            const stock = new Stock('AAPL', 'Apple Inc.', 150);
+            portfolio.registerBuyTransaction(stock, 100);
+            portfolio.registerSellTransaction(stock, 50);
+
+            expect(portfolio.getOwnedStocks()['AAPL']).toHaveProperty('quantity', 50);
+        });
+
+        it('should subtract the quantity of the owned stock', () => {
+            const portfolio = new Portfolio();
+            const stock = new Stock('AAPL', 'Apple Inc.', 150);
+            portfolio.registerBuyTransaction(stock, 100);
+            portfolio.registerSellTransaction(stock, 50);
+
+            expect(portfolio.getOwnedStocks()['AAPL']).toHaveProperty('quantity', 50);
+        });
+
+        it('should throw if the stock is not owned with empty owned stocks', () => {
+            const portfolio = new Portfolio();
+            const stock2 = new Stock('META', 'Meta Platforms', 250);
+
+
+            expect(() => portfolio.registerSellTransaction(stock2, 50)).toThrow('Stock is not owned');
+        });
+
+        it('should throw if the stock is not owned', () => {
+            const portfolio = new Portfolio();
+            const stock1 = new Stock('AAPL', 'Apple Inc.', 150);
+            const stock2 = new Stock('META', 'Meta Platforms', 250);
+
+            portfolio.registerBuyTransaction(stock1, 100);
+
+            expect(() => portfolio.registerSellTransaction(stock2, 50)).toThrow('Stock is not owned');
+        });
+    });
 });
