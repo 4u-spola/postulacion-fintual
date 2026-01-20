@@ -15,4 +15,22 @@ describe('Stock', () => {
         expect(history).toHaveLength(1);
         expect(history[0]).toEqual(new StockHistory(stock, new Date(), 150));
     });
+
+    it('should throw an error if the ticker is not provided', () => {
+        expect(() => new Stock('', 'Apple Inc.', 150)).toThrow('Ticker is required');
+        expect(() => new Stock(null as unknown as string, 'Apple Inc.', 150)).toThrow('Ticker is required');
+        expect(() => new Stock(undefined as unknown as string, 'Apple Inc.', 150)).toThrow('Ticker is required');
+    });
+
+    it('should throw an error if the name is not provided', () => {
+        expect(() => new Stock('AAPL', '', 150)).toThrow('Name is required');
+        expect(() => new Stock('AAPL', null as unknown as string, 150)).toThrow('Name is required');
+        expect(() => new Stock('AAPL', undefined as unknown as string, 150)).toThrow('Name is required');
+    });
+
+    it('should throw an error if the price is not provided', () => {
+        expect(() => new Stock('AAPL', 'Apple Inc.', 0)).toThrow('Price must be greater than 0');
+        expect(() => new Stock('AAPL', 'Apple Inc.', null as unknown as number)).toThrow('Price must be greater than 0');
+        expect(() => new Stock('AAPL', 'Apple Inc.', undefined as unknown as number)).toThrow('Price must be greater than 0');
+    });
 });
