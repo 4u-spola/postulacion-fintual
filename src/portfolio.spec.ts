@@ -224,7 +224,7 @@ describe('Portfolio', () => {
             const portfolio = new Portfolio();
             const stock = new Stock('AAPL', 'Apple Inc.', 150);
             portfolio.registerBuyTransaction(stock, 100);
-            expect(portfolio.currentAllocation()).toEqual({ 'AAPL': 1 });
+            expect(portfolio.currentAllocation()).toEqual({ 'AAPL': 100 });
         });
 
         it('should calculate the current allocation of the portfolio', () => {
@@ -234,7 +234,27 @@ describe('Portfolio', () => {
             const stock2 = new Stock('META', 'Meta Platforms', 100);
             portfolio.registerBuyTransaction(stock2, 300);
 
-            expect(portfolio.currentAllocation()).toEqual({ 'AAPL': 0.25, 'META': 0.75 });
+            expect(portfolio.currentAllocation()).toEqual({ 'AAPL': 25, 'META': 75 });
         });
     });
+
+    // describe('rebalance', () => {
+    //     it('should rebalance the portfolio', () => {
+    //         const portfolio = new Portfolio();
+    //         const stock1 = new Stock('AAPL', 'Apple Inc.', 100);
+    //         portfolio.registerBuyTransaction(stock1, 100);
+    //         const stock2 = new Stock('META', 'Meta Platforms', 100);
+    //         portfolio.registerBuyTransaction(stock2, 100);
+    //         portfolio.setStockAllocated([new StockAllocated(stock1, 50), new StockAllocated(stock2, 50)]);
+            
+            
+    //         const actions = portfolio.rebalance();
+
+    //         expect(actions).toHaveProperty('toSell');
+    //         expect(actions).toHaveProperty('toBuy');
+
+    //         expect(actions.toSell).toHaveLength(0);
+    //         expect(actions.toBuy).toHaveLength(0);
+    //     });
+    // });
 });
