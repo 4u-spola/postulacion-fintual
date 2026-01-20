@@ -1,7 +1,7 @@
 import { Portfolio } from "./portfolio";
 import { StockAllocated } from "./stock-allocated";
 
-export type PortfolioAllocationHistoryAction = 'change';
+export type PortfolioAllocationHistoryAction = 'initial' | 'change';
 
 export class PortfolioAllocationHistory {
     private readonly date: Date;
