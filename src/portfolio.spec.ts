@@ -20,4 +20,19 @@ describe('Portfolio', () => {
         (portfolio.getStockAllocated() as StockAllocated[]).push(stockAllocated);
         expect(portfolio.getStockAllocated()).toHaveLength(0);
     });
+
+    it('should not be able to set stock allocated if the sum of the quantities is not 100', () => {
+        const portfolio = new Portfolio();
+        const stockAllocated = new StockAllocated(new Stock('AAPL', 'Apple Inc.', 150), 70);
+        expect(() => portfolio.setStockAllocated([stockAllocated])).toThrow('The sum of the quantities must be 100');
+    });
+
+    it('should be able to set stock allocated if the sum of the quantities is 100', () => {
+        const portfolio = new Portfolio();
+        const stockAllocated1 = new StockAllocated(new Stock('AAPL', 'Apple Inc.', 150), 70);
+        const stockAllocated2 = new StockAllocated(new Stock('META', 'Meta Platforms', 250), 30);
+        portfolio.setStockAllocated([stockAllocated1, stockAllocated2]);
+
+        expect(portfolio.getStockAllocated()).toHaveLength(2);
+    });
 });
