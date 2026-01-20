@@ -94,6 +94,12 @@ export class Portfolio {
             }, {} as { [key: string]: number });
     }
 
+    private calculateQuantityToSellOrBuy(stock: Stock, quantity: number, marketValue: number): number {
+        const totalQuantity = quantity * marketValue / 100;
+
+        return Math.round(totalQuantity / stock.getCurrentPrice() * 100) / 100;
+    }
+
     public rebalance(): { toSell: { ticker: string, quantity: number }[], toBuy: { ticker: string, quantity: number }[] } {
         const marketValue = this.calculateMarketValue();
         const currentAllocation = this.currentAllocation();
@@ -114,17 +120,17 @@ export class Portfolio {
 
         Object.keys(stockAllocated).forEach(key => {
             if (!currentAllocation[key]) {
-                const quantityToBuy = stockAllocated[key].quantity * marketValue / 100;
-                toBuy.push({ ticker: key, quantity: quantityToBuy / stockAllocated[key].stock.getCurrentPrice() }); //TODO Calcular la cantidad de acciones a comprar
+
+                const quantityToBuy = this.calculateQuantityToSellOrBuy(stockAllocated[key].stock, stockAllocated[key].quantity, marketValue);
+                toBuy.push({ ticker: key, quantity: quantityToBuy });
             }
             else if (currentAllocation[key] !== stockAllocated[key].quantity) {
                 if (currentAllocation[key] > stockAllocated[key].quantity) {
-                    
-                    const quantityToSell = (currentAllocation[key] - stockAllocated[key].quantity) * marketValue / 100;
-                    toSell.push({ ticker: key, quantity: quantityToSell / stockAllocated[key].stock.getCurrentPrice() });
+                    const quantityToSell = this.calculateQuantityToSellOrBuy(stockAllocated[key].stock, currentAllocation[key] - stockAllocated[key].quantity, marketValue);
+                    toSell.push({ ticker: key, quantity: quantityToSell });
                 } else {
-                    const quantityToBuy = (stockAllocated[key].quantity - currentAllocation[key]) * marketValue / 100;
-                    toBuy.push({ ticker: key, quantity: quantityToBuy / stockAllocated[key].stock.getCurrentPrice() });
+                    const quantityToBuy = this.calculateQuantityToSellOrBuy(stockAllocated[key].stock, stockAllocated[key].quantity - currentAllocation[key], marketValue);
+                    toBuy.push({ ticker: key, quantity: quantityToBuy });
                 }
             }
         });
