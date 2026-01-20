@@ -101,6 +101,9 @@ describe('Portfolio', () => {
             expect(() => portfolio.registerBuyTransaction(stock, '100' as unknown as number)).toThrow('Quantity must be a positive number');
             expect(() => portfolio.registerBuyTransaction(stock, undefined as unknown as number)).toThrow('Quantity must be a positive number');
             expect(() => portfolio.registerBuyTransaction(stock, null as unknown as number)).toThrow('Quantity must be a positive number');
+            expect(() => portfolio.registerBuyTransaction(stock, -1)).toThrow('Quantity must be a positive number');
+            expect(() => portfolio.registerBuyTransaction(stock, NaN)).toThrow('Quantity must be a positive number');
+            expect(() => portfolio.registerBuyTransaction(stock, -Infinity)).toThrow('Quantity must be a positive number');
         });
 
         it('should throw an error if the stock is not provided', () => {
