@@ -5,7 +5,9 @@ import { StockAllocated } from "./stock-allocated";
 export class Portfolio {
     private stockAllocated: readonly StockAllocated[];
     private readonly allocationHistory: PortfolioAllocationHistory[] = [];
-    
+
+    private readonly ownedStocks: { [key: string]: { quantity: number, stock: Stock } } = {};
+
     constructor() {
         this.stockAllocated = [];
         this.allocationHistory.push(new PortfolioAllocationHistory(new Date(), [], [], 'initial', this));
@@ -30,5 +32,13 @@ export class Portfolio {
 
     public getAllocationHistory(): readonly PortfolioAllocationHistory[] {
         return [...this.allocationHistory];
+    }
+
+    public getOwnedStocks(): { [key: string]: { quantity: number, stock: Stock } } {
+        return { ...this.ownedStocks };
+    }
+
+    public registerBuyTransaction(stock: Stock, quantity: number): void {
+        this.ownedStocks[stock.getTicker()] = { quantity, stock };
     }
 }

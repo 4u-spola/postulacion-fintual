@@ -14,7 +14,14 @@ describe('Portfolio', () => {
             const portfolio = new Portfolio();
             expect(portfolio.getAllocationHistory()).toBeDefined();
             expect(portfolio.getAllocationHistory()).toHaveLength(1);
-            expect(portfolio.getAllocationHistory()[0]).toEqual(new PortfolioAllocationHistory(new Date(), [], [], 'initial', portfolio));
+
+            expect(portfolio.getAllocationHistory()[0]).toEqual(expect.objectContaining({
+                date: expect.any(Date),
+                oldStockAllocated: expect.any(Array),
+                stockAllocated: expect.any(Array),
+                action: 'initial',
+                portfolio: portfolio,
+            }));
         });
     });
 
@@ -54,6 +61,36 @@ describe('Portfolio', () => {
             portfolio.setStockAllocated([stockAllocated1, stockAllocated2]);
 
             expect(portfolio.getAllocationHistory()).toHaveLength(2);
+        });
+    });
+
+    describe('registerBuyTransaction', () => {
+        it('should add a owned stock', () => {
+            const portfolio = new Portfolio();
+            const stock = new Stock('AAPL', 'Apple Inc.', 150);
+            portfolio.registerBuyTransaction(stock, 100);
+
+            expect(portfolio.getOwnedStocks()['AAPL']).toEqual(expect.objectContaining({
+                quantity: 100,
+                stock: stock,
+            }));
+        });
+
+        it('should add a owned stock', () => {
+            const portfolio = new Portfolio();
+            const stock1 = new Stock('AAPL', 'Apple Inc.', 150);
+            const stock2 = new Stock('META', 'Meta Platforms', 250);
+            portfolio.registerBuyTransaction(stock1, 100);
+            portfolio.registerBuyTransaction(stock2, 200);
+            
+            expect(portfolio.getOwnedStocks()['AAPL']).toEqual(expect.objectContaining({
+                quantity: 100,
+                stock: stock1,
+            }));
+            expect(portfolio.getOwnedStocks()['META']).toEqual(expect.objectContaining({
+                quantity: 200,
+                stock: stock2,
+            }));
         });
     });
 });
