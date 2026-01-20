@@ -1,0 +1,23 @@
+{
+  "name": "desafio-fintual",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.ts",
+  "scripts": {
+    "start": "ts-node main.ts"
+  },
+  "keywords": [
+    "fintual",
+    "desafio",
+    "portfolio",
+    "management"
+  ],
+  "author": "Sergio Pola",
+  "license": "ISC",
+  "packageManager": "pnpm@10.26.0",
+  "devDependencies": {
+    "@types/node": "^25.0.9",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.3"
+  }
+}
