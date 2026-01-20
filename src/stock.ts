@@ -2,8 +2,8 @@ import { StockHistory } from "./stock-history";
 
 export class Stock {
     private readonly ticker: string;
-    private readonly name: string;
-    private readonly price: number;
+    private name: string;
+    private price: number;
 
     private readonly history: StockHistory[] = [];
 
@@ -18,5 +18,6 @@ export class Stock {
     public getHistory(): StockHistory[] {
         return this.history;
     }
+
 
 }
