@@ -9,3 +9,25 @@ Provide a portfolio rebalance method to know which Stocks should be sold and whi
 Add documentation/comments to understand your thinking process and solution*
 
 **Important**: If you use LLMs that’s ok, but you must share the conversations.
+
+## Instalación
+
+El sistema utiliza pnpm como administrador de paquetes por lo que se debe tener instalado para realizarlo.
+
+Se prefirió utilizar pnpm por el mejor manejo de espacio en disco duro y mejor tiempo de procesamiento.
+
+En lo personal, prefieron usar pnpm y ahorrarme el diferencian npm de npx.
+
+
+```bash
+pnpm install
+```
+
+## Ejecución
+
+
+
+
+```bash
+pnpm start
+```
