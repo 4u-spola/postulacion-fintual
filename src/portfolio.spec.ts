@@ -198,4 +198,43 @@ describe('Portfolio', () => {
             expect(() => portfolio.registerSellTransaction(stock2, 50)).toThrow('Stock is not owned');
         });
     });
+
+    describe('calculateMarketValue', () => {
+        it('should calculate the market value of the portfolio', () => {
+            const portfolio = new Portfolio();
+            const stock = new Stock('AAPL', 'Apple Inc.', 150);
+            portfolio.registerBuyTransaction(stock, 100);
+            expect(portfolio.calculateMarketValue()).toBe(15000);
+
+            const stock2 = new Stock('META', 'Meta Platforms', 100);
+            portfolio.registerBuyTransaction(stock2, 150);
+            expect(portfolio.calculateMarketValue()).toBe(30000);
+        });
+
+        it('should calculate the market value of the portfolio', () => {
+            const portfolio = new Portfolio();
+            const stock = new Stock('AAPL', 'Apple Inc.', 150);
+            portfolio.registerBuyTransaction(stock, 100);
+            expect(portfolio.calculateMarketValue()).toBe(15000);
+        });
+    });
+
+    describe('currentAllocation', () => {
+        it('should calculate the current allocation of the portfolio', () => {
+            const portfolio = new Portfolio();
+            const stock = new Stock('AAPL', 'Apple Inc.', 150);
+            portfolio.registerBuyTransaction(stock, 100);
+            expect(portfolio.currentAllocation()).toEqual({ 'AAPL': 1 });
+        });
+
+        it('should calculate the current allocation of the portfolio', () => {
+            const portfolio = new Portfolio();
+            const stock1 = new Stock('AAPL', 'Apple Inc.', 100);
+            portfolio.registerBuyTransaction(stock1, 100);
+            const stock2 = new Stock('META', 'Meta Platforms', 100);
+            portfolio.registerBuyTransaction(stock2, 300);
+
+            expect(portfolio.currentAllocation()).toEqual({ 'AAPL': 0.25, 'META': 0.75 });
+        });
+    });
 });

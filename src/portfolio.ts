@@ -78,4 +78,19 @@ export class Portfolio {
         }
     }
 
+    public calculateMarketValue(): number {
+        return Object.values(this.ownedStocks)
+            .map(ownedStock => ownedStock.quantity * ownedStock.stock.getCurrentPrice())
+            .reduce((acc, curr) => acc + curr, 0);
+    }
+
+    public currentAllocation(): { [key: string]: number } {
+        const marketValue = this.calculateMarketValue();
+
+        return Object.values(this.ownedStocks)
+            .reduce((acc, ownedStock) => {
+                acc[ownedStock.stock.getTicker()] = ownedStock.quantity * ownedStock.stock.getCurrentPrice() / marketValue;
+                return acc;
+            }, {} as { [key: string]: number });
+    }
 }
