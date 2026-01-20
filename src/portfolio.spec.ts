@@ -238,23 +238,60 @@ describe('Portfolio', () => {
         });
     });
 
-    // describe('rebalance', () => {
-    //     it('should rebalance the portfolio', () => {
-    //         const portfolio = new Portfolio();
-    //         const stock1 = new Stock('AAPL', 'Apple Inc.', 100);
-    //         portfolio.registerBuyTransaction(stock1, 100);
-    //         const stock2 = new Stock('META', 'Meta Platforms', 100);
-    //         portfolio.registerBuyTransaction(stock2, 100);
-    //         portfolio.setStockAllocated([new StockAllocated(stock1, 50), new StockAllocated(stock2, 50)]);
+    describe('rebalance', () => {
+        // it('should rebalance the portfolio', () => {
+        //     const portfolio = new Portfolio();
+        //     const stock1 = new Stock('AAPL', 'Apple Inc.', 100);
+        //     portfolio.registerBuyTransaction(stock1, 100);
+        //     const stock2 = new Stock('META', 'Meta Platforms', 100);
+        //     portfolio.registerBuyTransaction(stock2, 100);
+        //     portfolio.setStockAllocated([new StockAllocated(stock1, 50), new StockAllocated(stock2, 50)]);
             
             
-    //         const actions = portfolio.rebalance();
+        //     const actions = portfolio.rebalance();
 
-    //         expect(actions).toHaveProperty('toSell');
-    //         expect(actions).toHaveProperty('toBuy');
+        //     expect(actions).toHaveProperty('toSell');
+        //     expect(actions).toHaveProperty('toBuy');
 
-    //         expect(actions.toSell).toHaveLength(0);
-    //         expect(actions.toBuy).toHaveLength(0);
-    //     });
-    // });
+        //     expect(actions.toSell).toHaveLength(0);
+        //     expect(actions.toBuy).toHaveLength(0);
+        // });
+
+        it('should rebalance the portfolio selling all META', () => {
+            const portfolio = new Portfolio();
+            const stock1 = new Stock('AAPL', 'Apple Inc.', 100);
+            portfolio.registerBuyTransaction(stock1, 100);
+            const stock2 = new Stock('META', 'Meta Platforms', 100);
+            portfolio.registerBuyTransaction(stock2, 100);
+            portfolio.setStockAllocated([new StockAllocated(stock1, 100)]);
+            
+            
+            const actions = portfolio.rebalance();
+
+            expect(actions).toHaveProperty('toSell');
+            expect(actions).toHaveProperty('toBuy');
+
+            expect(actions.toSell).toHaveLength(1);
+            expect(actions.toSell[0]).toEqual({ ticker: 'META', quantity: 100 });
+
+            expect(actions.toBuy).toHaveLength(0);
+        });
+
+        // it('should rebalance the portfolio', () => {
+        //     const portfolio = new Portfolio();
+        //     const stock1 = new Stock('AAPL', 'Apple Inc.', 100);
+        //     portfolio.setStockAllocated([new StockAllocated(stock1, 100)]);
+            
+            
+        //     const actions = portfolio.rebalance();
+
+        //     expect(actions).toHaveProperty('toSell');
+        //     expect(actions).toHaveProperty('toBuy');
+
+        //     expect(actions.toSell).toHaveLength(0);
+        //     expect(actions.toBuy).toHaveLength(1);
+
+        //     expect(actions.toBuy[0]).toEqual({ ticker: 'AAPL', quantity: 1 });
+        // });
+    });
 });

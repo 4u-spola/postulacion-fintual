@@ -94,32 +94,52 @@ export class Portfolio {
             }, {} as { [key: string]: number });
     }
 
-//     public rebalance(): { toSell: {ticker: string, quantity: number}[], toBuy: {ticker: string, quantity: number}[] } {
-//         const currentAllocation = this.currentAllocation();
-//         const stockAllocated = this.getStockAllocated().reduce((acc, stockAllocated) => {
-//             acc[stockAllocated.getStock().getTicker()] = stockAllocated.getQuantity();
-//             return acc;
-//         }, {} as { [key: string]: number });
+    public rebalance(): { toSell: { ticker: string, quantity: number }[], toBuy: { ticker: string, quantity: number }[] } {
+        const currentAllocation = this.currentAllocation();
+        const stockAllocated = this.getStockAllocated().reduce((acc, stockAllocated) => {
+            acc[stockAllocated.getStock().getTicker()] = stockAllocated.getQuantity();
+            return acc;
+        }, {} as { [key: string]: number });
 
-//         const toSell: {ticker: string, quantity: number}[] = [];
-//         const toBuy: {ticker: string, quantity: number}[] = [];
-// console.log(currentAllocation);
-// console.log(stockAllocated);
-//         for(var key in currentAllocation) {
-//             if (currentAllocation[key] !== stockAllocated[key]) {
-//                 if (currentAllocation[key] > stockAllocated[key]) {
-//                     toSell.push({ ticker: key, quantity: currentAllocation[key] - stockAllocated[key] });
-//                 } else {
-//                     toBuy.push({ ticker: key, quantity: stockAllocated[key] - currentAllocation[key] });
-//                 }
-//             }
-//         }
+        const toSell: { ticker: string, quantity: number }[] = [];
+        const toBuy: { ticker: string, quantity: number }[] = [];
+        // console.log(currentAllocation);
+        // console.log(stockAllocated);
 
-//         // const rebalance = stockAllocated.reduce((acc, stockAllocated) => {
-//         //     acc[stockAllocated.getStock().getTicker()] = stockAllocated.getQuantity() - currentAllocation[stockAllocated.getStock().getTicker()];
-//         //     return acc;
-//         // }, {} as { [key: string]: number });
 
-//         return { toSell, toBuy };
-//     }
+        // Object.keys(currentAllocation).filter(key => !stockAllocated[key]).forEach(key => {
+        //     toSell.push({ ticker: key, quantity: currentAllocation[key] });
+        // });
+
+
+        // Mezclamos las llaves de los objetos currentAllocation y stockAllocated para recorrer todas las acciones.
+        // Esto me ahorró muchos de ciclos
+        const keys = new Set([...Object.keys(currentAllocation), ...Object.keys(stockAllocated)]);
+
+        keys.forEach(key => {
+            if (!stockAllocated[key]) {
+                // console.log(`Selling ${key} all ${currentAllocation[key]}`);
+                toSell.push({ ticker: key, quantity: currentAllocation[key] });
+            } else if (!currentAllocation[key]) {
+                // console.log(`Buying ${key} ${stockAllocated[key]}`);
+                toBuy.push({ ticker: key, quantity: stockAllocated[key] }); //TODO Calcular la cantidad de acciones a comprar
+            }
+            else if (currentAllocation[key] !== stockAllocated[key]) {
+                if (currentAllocation[key] > stockAllocated[key]) {
+                    // console.log(`Selling ${key} ${currentAllocation[key] - stockAllocated[key]}`);
+                    toSell.push({ ticker: key, quantity: currentAllocation[key] - stockAllocated[key] });
+                } else {
+                    // console.log(`Buying ${key} ${stockAllocated[key] - currentAllocation[key]}`);
+                    toBuy.push({ ticker: key, quantity: stockAllocated[key] - currentAllocation[key] });
+                }
+            }
+        });
+
+        // const rebalance = stockAllocated.reduce((acc, stockAllocated) => {
+        //     acc[stockAllocated.getStock().getTicker()] = stockAllocated.getQuantity() - currentAllocation[stockAllocated.getStock().getTicker()];
+        //     return acc;
+        // }, {} as { [key: string]: number });
+        // console.log(toSell);
+        return { toSell, toBuy };
+    }
 }
