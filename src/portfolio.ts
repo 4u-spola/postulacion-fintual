@@ -1,4 +1,5 @@
 import { PortfolioAllocationHistory } from "./portfolio.-allocation-history";
+import { PortfolioOwnedQuantity } from "./portfolio-owned-quantity.type";
 import { Stock } from "./stock";
 import { StockAllocated } from "./stock-allocated";
 
@@ -6,7 +7,7 @@ export class Portfolio {
     private stockAllocated: readonly StockAllocated[];
     private readonly allocationHistory: PortfolioAllocationHistory[] = [];
 
-    private readonly ownedStocks: { [key: string]: { quantity: number, stock: Stock } } = {};
+    private readonly ownedStocks: PortfolioOwnedQuantity = {};
 
     constructor() {
         this.stockAllocated = [];
@@ -70,11 +71,11 @@ export class Portfolio {
             throw new Error('Quantity must be less than the owned quantity');
         }
 
-
         ownedStock.quantity -= quantity;
 
         if (ownedStock.quantity === 0) {
             delete this.ownedStocks[stock.getTicker()];
         }
     }
+
 }
