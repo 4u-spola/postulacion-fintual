@@ -111,5 +111,28 @@ describe('Portfolio', () => {
             expect(() => portfolio.registerBuyTransaction(null as unknown as Stock, 100)).toThrow('Stock is required');
             expect(() => portfolio.registerBuyTransaction(undefined as unknown as Stock, 100)).toThrow('Stock is required');
         });
+
+        it('should sum the quantity of the same stock', () => {
+            const portfolio = new Portfolio();
+            const stock = new Stock('AAPL', 'Apple Inc.', 150);
+            portfolio.registerBuyTransaction(stock, 100);
+            portfolio.registerBuyTransaction(stock, 200);
+
+            expect(portfolio.getOwnedStocks()['AAPL']).toHaveProperty('quantity', 300);
+        });
+
+        it('should sum the quantity of the same stock', () => {
+            const portfolio = new Portfolio();
+            const stock1 = new Stock('AAPL', 'Apple Inc.', 150);
+            portfolio.registerBuyTransaction(stock1, 100);
+            portfolio.registerBuyTransaction(stock1, 200);
+
+            const stock2 = new Stock('META', 'Meta Platforms', 250);
+            portfolio.registerBuyTransaction(stock2, 400);
+            portfolio.registerBuyTransaction(stock2, 500);
+
+            expect(portfolio.getOwnedStocks()['AAPL']).toHaveProperty('quantity', 300);
+            expect(portfolio.getOwnedStocks()['META']).toHaveProperty('quantity', 900);
+        });
     });
 });

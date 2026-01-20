@@ -46,6 +46,10 @@ export class Portfolio {
             throw new Error('Quantity must be a positive number');
         }
 
-        this.ownedStocks[stock.getTicker()] = { quantity, stock };
+        if (this.ownedStocks[stock.getTicker()]) {
+            this.ownedStocks[stock.getTicker()].quantity += quantity;
+        } else {
+            this.ownedStocks[stock.getTicker()] = { quantity, stock };
+        }
     }
 }
