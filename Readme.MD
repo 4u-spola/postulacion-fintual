@@ -31,3 +31,16 @@ pnpm install
 ```bash
 pnpm start
 ```
+
+
+## Estrategia para balance
+
+1. Calcular el valor de mercado de la cartera
+2. obtener acciones a ser vendidas
+
+Por cada acción que permanece en la cartera
+
+3. Calcular monto de las acciones
+4. Comparar monto calculado con monto esperado de la distribución
+5. Calcular cuaántas acciones vender o comprar dependiendo si el monto es mayor que el esperado o es menor
+

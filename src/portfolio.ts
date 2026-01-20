@@ -107,29 +107,21 @@ export class Portfolio {
         // console.log(stockAllocated);
 
 
-        // Object.keys(currentAllocation).filter(key => !stockAllocated[key]).forEach(key => {
-        //     toSell.push({ ticker: key, quantity: currentAllocation[key] });
-        // });
+        Object.keys(currentAllocation).filter(key => !stockAllocated[key]).forEach(key => {
+            toSell.push({ ticker: key, quantity: currentAllocation[key] });
+        });
 
-
-        // Mezclamos las llaves de los objetos currentAllocation y stockAllocated para recorrer todas las acciones.
-        // Esto me ahorró muchos de ciclos
-        const keys = new Set([...Object.keys(currentAllocation), ...Object.keys(stockAllocated)]);
-
-        keys.forEach(key => {
-            if (!stockAllocated[key]) {
-                // console.log(`Selling ${key} all ${currentAllocation[key]}`);
-                toSell.push({ ticker: key, quantity: currentAllocation[key] });
-            } else if (!currentAllocation[key]) {
-                // console.log(`Buying ${key} ${stockAllocated[key]}`);
+        Object.keys(stockAllocated).forEach(key => {
+            if (!currentAllocation[key]) {
+                console.log(`Buying ${key} ${stockAllocated[key]}`);
                 toBuy.push({ ticker: key, quantity: stockAllocated[key] }); //TODO Calcular la cantidad de acciones a comprar
             }
             else if (currentAllocation[key] !== stockAllocated[key]) {
                 if (currentAllocation[key] > stockAllocated[key]) {
-                    // console.log(`Selling ${key} ${currentAllocation[key] - stockAllocated[key]}`);
+                    console.log(`Selling ${key} ${currentAllocation[key] - stockAllocated[key]}`);
                     toSell.push({ ticker: key, quantity: currentAllocation[key] - stockAllocated[key] });
                 } else {
-                    // console.log(`Buying ${key} ${stockAllocated[key] - currentAllocation[key]}`);
+                    console.log(`Buying ${key} ${stockAllocated[key] - currentAllocation[key]}`);
                     toBuy.push({ ticker: key, quantity: stockAllocated[key] - currentAllocation[key] });
                 }
             }
