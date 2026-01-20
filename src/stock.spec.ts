@@ -16,7 +16,11 @@ describe('Stock', () => {
 
             expect(history).toBeDefined();
             expect(history).toHaveLength(1);
-            expect(history[0]).toEqual(new StockHistory(stock, new Date(), 150));
+            expect(history[0]).toEqual(expect.objectContaining({
+                stock: stock,
+                date: expect.any(Date),
+                price: 150,
+            }));
         });
 
         it('should throw an error if the ticker is not provided', () => {
