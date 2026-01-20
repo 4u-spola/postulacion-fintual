@@ -8,7 +8,7 @@ export class Portfolio {
         this.stockAllocated = [];
     }
 
-    public getStockAllocated(): StockAllocated[] {
+    public getStockAllocated(): readonly StockAllocated[] {
         return [...this.stockAllocated];
     }
 }

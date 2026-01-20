@@ -17,7 +17,7 @@ describe('Portfolio', () => {
     it('should not be able to modify stock allocated changing the stocks array', () => {
         const portfolio = new Portfolio();
         const stockAllocated = new StockAllocated(new Stock('AAPL', 'Apple Inc.', 150), 100);
-        portfolio.getStockAllocated().push(stockAllocated);
+        (portfolio.getStockAllocated() as StockAllocated[]).push(stockAllocated);
         expect(portfolio.getStockAllocated()).toHaveLength(0);
     });
 });
