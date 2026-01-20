@@ -24,6 +24,7 @@ export class Portfolio {
             throw new Error('The sum of the quantities must be 100');
         }
 
+        this.allocationHistory.push(new PortfolioAllocationHistory(new Date(), this.stockAllocated, stockAllocated, 'change', this));
         this.stockAllocated = stockAllocated;
     }
 

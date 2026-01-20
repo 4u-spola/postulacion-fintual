@@ -46,5 +46,14 @@ describe('Portfolio', () => {
 
             expect(portfolio.getStockAllocated()).toHaveLength(2);
         });
+
+        it('should add a allocation history when the stock allocated is set', () => {
+            const portfolio = new Portfolio();
+            const stockAllocated1 = new StockAllocated(new Stock('AAPL', 'Apple Inc.', 150), 70);
+            const stockAllocated2 = new StockAllocated(new Stock('META', 'Meta Platforms', 250), 30);
+            portfolio.setStockAllocated([stockAllocated1, stockAllocated2]);
+
+            expect(portfolio.getAllocationHistory()).toHaveLength(2);
+        });
     });
 });
