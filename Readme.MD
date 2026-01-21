@@ -31,10 +31,13 @@ En lo personal, prefieron usar pnpm y ahorrarme el diferencian npm de npx.
 pnpm install
 ```
 
+## Test
+
+```bash
+pnpm test
+```
+
 ## Ejecución
-
-
-
 
 ```bash
 pnpm start
