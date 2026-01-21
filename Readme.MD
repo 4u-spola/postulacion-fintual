@@ -10,6 +10,14 @@ Add documentation/comments to understand your thinking process and solution*
 
 **Important**: If you use LLMs that’s ok, but you must share the conversations.
 
+## Consideraciones generales
+
+El presente proyecto fue programado por mi sni agentes IA para facilitar la evaluación de mis competencias. El uso que se le dió al agente fue como reemplazo de google y stackoverflow, la conversación la pueden encontrar en la carpeta docs y está referenciada al final de este archivo.
+
+Para proyectos del día a día soy usuario de agentes con coordinación y múltiples perfiles.
+
+
+
 ## Instalación
 
 El sistema utiliza pnpm como administrador de paquetes por lo que se debe tener instalado para realizarlo.
@@ -23,10 +31,13 @@ En lo personal, prefieron usar pnpm y ahorrarme el diferencian npm de npx.
 pnpm install
 ```
 
+## Test
+
+```bash
+pnpm test
+```
+
 ## Ejecución
-
-
-
 
 ```bash
 pnpm start
@@ -43,4 +54,13 @@ Por cada acción que permanece en la cartera
 3. Calcular monto de las acciones
 4. Comparar monto calculado con monto esperado de la distribución
 5. Calcular cuaántas acciones vender o comprar dependiendo si el monto es mayor que el esperado o es menor
+
+
+## Documentación
+
+En la carpeta /docs se encuentra la información del proyecto.
+
+[Contexto de negocio](./docs/contexto_negocio.MD) Con información recopilada para usar el lenguje común del mundo de las inversiones.
+
+[Conversación Cursor](./docs/cursor_agent.md) Con la conversación con el agente de IA de cursor.
 
